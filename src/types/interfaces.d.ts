@@ -45,3 +45,6 @@ export interface BaseMovie {
 
     } [];
   }
+  export interface ListedMovie extends BaseMovie {
+    genre_ids: number[];
+  }
