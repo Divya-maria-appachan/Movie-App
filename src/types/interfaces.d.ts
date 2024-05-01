@@ -21,6 +21,8 @@ export interface BaseMovie {
     movies: BaseMovie[];
   } 
 
+  export type FilterOption = "title" | "genre";
+
  
   export interface MovieImage {
     file_path: string;
