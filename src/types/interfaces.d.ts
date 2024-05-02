@@ -56,3 +56,15 @@ export interface BaseMovie {
     title: string;
     selectFavourite: (m: number) => void;
   }
+interface MovieT {
+  id: number;
+  title: string;
+  homepage: string;
+  tagline: string;
+  // Add other properties as needed
+}
+export interface Review{
+  id: string;
+  content: string
+  author: string
+}
