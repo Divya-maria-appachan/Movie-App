@@ -21,7 +21,7 @@ export interface BaseMovie {
     movies: BaseMovie[];
   } 
 
-  export type FilterOption = "title" | "genre";
+  export type FilterOption = "title" | "genre" | "rating"| "year";
 
  
   export interface MovieImage {
@@ -68,3 +68,8 @@ export interface Review{
   content: string
   author: string
 }
+
+export type RatingFilterOption = {
+  type: "rating";
+  value: number;
+};
