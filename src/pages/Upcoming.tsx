@@ -59,22 +59,26 @@ import { getUpcomingMovies } from "../api/tmdb-api";
 import PageTemplate from "../components/templateMovieListPage";
 import { ListedMovie } from "../types/interfaces";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
+import Pagination from "../components/Pagination";
+
+const ITEMS_PER_PAGE = 12; // Number of movies to display per page
 
 const UpcomingMoviesPage: FC = () => {
   const [movies, setMovies] = useState<ListedMovie[]>([]);
+  const [currentPage, setCurrentPage] = useState(1); // Track the current page number
 
   useEffect(() => {
-    const fetchUpcomingMovies = async () => {
-      try {
-        const upcomingMovies = await getUpcomingMovies(); // Fetch upcoming movies
-        setMovies(upcomingMovies);
-      } catch (error) {
-        console.error("Error fetching upcoming movies:", error);
-      }
-    };
+    fetchMovies(currentPage); // Fetch movies for the initial page
+  }, [currentPage]); // Trigger fetchMovies whenever currentPage changes
 
-    fetchUpcomingMovies();
-  }, []);
+  const fetchMovies = async (page: number) => {
+    try {
+      const upcomingMovies = await getUpcomingMovies(page); // Fetch upcoming movies for the specified page
+      setMovies(upcomingMovies);
+    } catch (error) {
+      console.error("Error fetching upcoming movies:", error);
+    }
+  };
 
   // New function to handle adding to favorites
   const addToFavourites = (movieId: number) => {
@@ -85,20 +89,39 @@ const UpcomingMoviesPage: FC = () => {
     localStorage.setItem("favourites", JSON.stringify(updatedMovies));
   };
 
+  // Calculate pagination values
+  const totalItems = movies.length;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const displayMovies = movies.slice(startIndex, endIndex);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
-    <PageTemplate
-      title="Upcoming Movies"
-      movies={movies}
-      action={(movie: ListedMovie) => {
-        return (
-         <>
-        <AddToFavouritesIcon {...movie}/>
-        </>
-        ); 
-      }}
-    />
+    <>
+      <PageTemplate
+        title="Upcoming Movies"
+        movies={displayMovies}
+        action={(movie: ListedMovie) => {
+          return (
+           <>
+            <AddToFavouritesIcon {...movie}/>
+           </>
+          ); 
+        }}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+    </>
   );
 };
 
 export default UpcomingMoviesPage;
+
 
