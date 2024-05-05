@@ -17,6 +17,14 @@ export interface BaseMovie {
     favourite?: boolean;
   }
 
+  export interface Review {
+    author: string,
+    content: string,
+    agree: boolean,
+    rating: number,
+    movieId: number,
+  }
+
   export interface BaseMovieList { 
     movies: BaseMovie[];
   } 
