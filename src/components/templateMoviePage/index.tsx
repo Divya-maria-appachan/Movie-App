@@ -6,6 +6,9 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { getMovieImages } from "../../api/tmdb-api";
 import { MovieImage, MovieT } from "../../types/interfaces";
 
+import { useQuery } from "react-query";
+import Spinner from '../spinner';
+
 const styles = {
     gridListRoot: {
         display: "flex",
@@ -23,19 +26,25 @@ interface TemplateMoviePageProps {
     children: React.ReactElement;
 }
 
-
 const TemplateMoviePage: React.FC<TemplateMoviePageProps> = (props) => {
-    const [images, setImages] = useState([]);
     const { movie, children } = props;
+    const { data, error, isLoading, isError } = useQuery<MovieImage[], Error>(
+        ["images", movie.id],
+        () => getMovieImages(movie.id)
+    );
 
-    useEffect(() => {
-        getMovieImages(movie.id).then((images) => {
-            setImages(images);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    if (isLoading) {
+        return <Spinner />;
+    }
 
-    return (
+    if (isError) {
+        return <h1>{(error
+
+        ).message}</h1>;
+    }
+
+    const images = data as MovieImage[];
+  return (
         <>
             <MovieHeader {...movie} />
 

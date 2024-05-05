@@ -7,11 +7,27 @@ import FavouriteMoviesPage from "./pages/favouriteMoviesPage"; // NEW
 import UpcomingMoviesPage from "./pages/Upcoming";
 import MovieReviewPage from "./pages/movieReviewPage";
 import SiteHeader from './components/siteHeader'
+import MoviesContextProvider from "./contexts/moviesContext";
+
+import { QueryClientProvider, QueryClient } from "react-query";
+import { ReactQueryDevtools } from 'react-query/devtools';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 360000,
+      refetchInterval: 360000, 
+      refetchOnWindowFocus: false
+    },
+  },
+});
 
 const App = () => {
   return (
-      <BrowserRouter>
-          <SiteHeader />      {/* New Header  */}
+    <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <SiteHeader />
+        <MoviesContextProvider>
           <Routes>
         <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
         <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
@@ -19,10 +35,13 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={<Navigate to="/" />} />
          <Route path="/reviews/:id" element={<MovieReviewPage/>} />
-      </Routes>
-    </BrowserRouter>
+         </Routes>
+        </MoviesContextProvider>
+      </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
-};
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

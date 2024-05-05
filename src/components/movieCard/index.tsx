@@ -1,5 +1,5 @@
 
-import React, {MouseEvent} from "react";
+import React, {MouseEvent, useContext} from "react";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -16,6 +16,10 @@ import IconButton from "@mui/material/IconButton";
 import img from '../../images/film-poster-placeholder.png';
 import { BaseMovie } from "../../types/interfaces"; 
 
+import { MoviesContext } from "../../contexts/moviesContext";
+import { ListedMovie } from "../../types/interfaces";
+
+
 import Avatar from "@mui/material/Avatar";
 
 interface MovieCardProps extends BaseMovie {
@@ -30,19 +34,30 @@ const styles = {
   },
 };
 
-const MovieCard: React.FC<MovieCardProps> = (props) => {// update this
+interface MovieListProps {
+  movie: ListedMovie,
+  action: (m: ListedMovie) => React.ReactNode;
+  
+}
 
-  const handleAddToFavourite = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    props.selectFavourite(props.id);
-  };
+const MovieCard: React.FC<MovieListProps> = (props) => {
+  const movie = {...props.movie, favourite: false};
+  const { favourites, addToFavourites } = useContext(MoviesContext);
+  
+  if (favourites.find((id) => id === movie.id)) 
+    movie.favourite = true;
+ 
+  // const handleAddToFavourite = (e: MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+  //   addToFavourites(movie);
+  // };
  
 
   return (
     <Card sx={styles.card}>
        <CardHeader
         avatar={
-          props.favourite ? (
+          movie.favourite ? (
             <Avatar sx={styles.avatar}>
               <FavoriteIcon />
             </Avatar>
@@ -50,15 +65,15 @@ const MovieCard: React.FC<MovieCardProps> = (props) => {// update this
         }
         title={
           <Typography variant="h5" component="p">
-            {props.title}{" "}
+            {movie.title}{" "}
           </Typography>
         }
       />
       <CardMedia
         sx={styles.media}
         image={
-          props.poster_path
-            ? `https://image.tmdb.org/t/p/w500/${props.poster_path}`
+          movie.poster_path
+            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
             : img
         }
       />
@@ -67,22 +82,20 @@ const MovieCard: React.FC<MovieCardProps> = (props) => {// update this
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
-              {props.release_date}
+              {movie.release_date}
             </Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="small" />
-              {"  "} {props.vote_average}{" "}
+              {"  "} {movie.vote_average}{" "}
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-      <IconButton aria-label="add to favourites" onClick={handleAddToFavourite}>
-          <FavoriteIcon color="primary" fontSize="large" />
-    </IconButton>
-        <Link to={`/movies/${props.id}`}>
+      {props.action(movie)}
+        <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
           </Button>

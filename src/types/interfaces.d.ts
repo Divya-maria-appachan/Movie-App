@@ -48,14 +48,17 @@ export interface BaseMovie {
     } [];
   }
   export interface ListedMovie extends BaseMovie {
+    
     genre_ids: number[];
+    
   }
 
   export interface MovieListPageTemplateProps {
     movies: ListedMovie[];
     title: string;
-    selectFavourite: (m: number) => void;
+    action: (m: MovieT) => void;
   }
+
 interface MovieT {
   id: number;
   title: string;
@@ -73,3 +76,17 @@ export type RatingFilterOption = {
   type: "rating";
   value: number;
 };
+
+export interface GenreData {
+  genres: {
+    id: string;
+    name: string
+  }[];
+}
+
+interface DiscoverMovies {
+  page: number;	
+  total_pages: number;
+  total_results: number;
+  results: BaseMovie[];
+}
