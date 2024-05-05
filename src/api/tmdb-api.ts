@@ -10,12 +10,27 @@ export const getMovies = () => {
         throw error
       });
   };
+  // export const getUpcomingMovies = () => {
+  //   return fetch(
+  //     `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
+  //   )
+  //     .then(res => res.json())
+  //     .then(json => json.results);
+  // };
   export const getUpcomingMovies = () => {
     return fetch(
       `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
     )
-      .then(res => res.json())
-      .then(json => json.results);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Unable to fetch upcoming movies. Response status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => data.results)
+      .catch((error) => {
+        throw error;
+      });
   };
   
   export const getMovie = (id: string) => {
