@@ -19,26 +19,34 @@ const styles = {
   appbar: {
     // background: 'none',
   },
-  // offset: theme.mixins.toolbar,
+  menuButton: {
+    marginRight: "10px",
+  },
 };
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader: React.FC = () => {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement|null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const menuOptions = [
+  const movieMenuOptions = [
     { label: "Home", path: "/" },
-    { label: "Favorites", path: "/movies/favourites" },
-    { label: "Upcoming", path: "/movies/upcoming" },
-
-    { label: "Option 3", path: "/" },
-    { label: "Option 4", path: "/" },
+    { label: "Upcoming Movies", path: "/movies/upcoming" },
+    { label: "Trending Movies", path: "/movies/trending" },
+    { label: "Favorites Movies", path: "/movies/favourites" },
   ];
+
+  const tvMenuOptions = [
+    { label: "TV Shows", path: "/tvs" },
+    { label: "Trending TV Shows", path: "/tvs/Trending" },
+    { label: "Favorites TV Shows", path: "/tvs/favourites" },
+  ];
+
+  const myFantasyMovieOption = { label: "My Movie Fantasy", path: "/fantasy" };
 
   const handleMenuSelect = (pageURL: string) => {
     navigate(pageURL);
@@ -52,11 +60,8 @@ const SiteHeader: React.FC = () => {
     <>
       <AppBar sx={styles.appbar} position="fixed" elevation={0} color="primary">
         <Toolbar>
-          <Typography variant="h4" sx={styles.title}>
-            TMDB Client
-          </Typography>
-          <Typography variant="h6" sx={styles.title}>
-            All you ever wanted to know about Movies!
+          <Typography variant="h5" sx={styles.title}>
+            CineScope
           </Typography>
           {isMobile ? (
             <>
@@ -67,6 +72,7 @@ const SiteHeader: React.FC = () => {
                 onClick={handleMenu}
                 color="inherit"
                 size="large"
+                sx={styles.menuButton}
               >
                 <MenuIcon />
               </IconButton>
@@ -85,7 +91,10 @@ const SiteHeader: React.FC = () => {
                 open={open}
                 onClose={() => setAnchorEl(null)}
               >
-                {menuOptions.map((opt) => (
+                <Typography variant="h6" component="div" sx={{ padding: "10px" }}>
+                  Movies
+                </Typography>
+                {movieMenuOptions.map((opt) => (
                   <MenuItem
                     key={opt.label}
                     onClick={() => handleMenuSelect(opt.path)}
@@ -93,26 +102,60 @@ const SiteHeader: React.FC = () => {
                     {opt.label}
                   </MenuItem>
                 ))}
+                <Typography variant="h6" component="div" sx={{ padding: "10px" }}>
+                  TV Shows
+                </Typography>
+                {tvMenuOptions.map((opt) => (
+                  <MenuItem
+                    key={opt.label}
+                    onClick={() => handleMenuSelect(opt.path)}
+                  >
+                    {opt.label}
+                  </MenuItem>
+                ))}
+                <MenuItem
+                  key={myFantasyMovieOption.label}
+                  onClick={() => handleMenuSelect(myFantasyMovieOption.path)}
+                >
+                  {myFantasyMovieOption.label}
+                </MenuItem>
               </Menu>
             </>
           ) : (
             <>
-              {menuOptions.map((opt) => (
+              {movieMenuOptions.map((opt) => (
                 <Button
                   key={opt.label}
                   color="inherit"
                   onClick={() => handleMenuSelect(opt.path)}
+                  sx={styles.menuButton}
                 >
                   {opt.label}
                 </Button>
               ))}
+              {tvMenuOptions.map((opt) => (
+                <Button
+                  key={opt.label}
+                  color="inherit"
+                  onClick={() => handleMenuSelect(opt.path)}
+                  sx={styles.menuButton}
+                >
+                  {opt.label}
+                </Button>
+              ))}
+              <Button
+                key={myFantasyMovieOption.label}
+                color="inherit"
+                onClick={() => handleMenuSelect(myFantasyMovieOption.path)}
+                sx={styles.menuButton}
+              >
+                {myFantasyMovieOption.label}
+              </Button>
             </>
           )}
         </Toolbar>
       </AppBar>
       <Offset />
-
-      {/* <div className={classes.offset} /> */}
     </>
   );
 };

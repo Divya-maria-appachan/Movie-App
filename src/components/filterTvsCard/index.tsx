@@ -1,6 +1,6 @@
 
 import React, { ChangeEvent,useState} from "react";  // useState/useEffect redundant 
-import { FilterOption, GenreData } from "../../types/interfaces"; //include GenreData interface 
+import { TvFilterOption, TvGenreData } from "../../types/interfaces"; //include GenreData interface 
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 import { SelectChangeEvent, TextField } from "@mui/material";
@@ -12,7 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Slider from "@mui/material/Slider";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { getGenres } from "../../api/tmdb-api";
+import { getGenre } from "../../api/tmdb-api";
 
 const styles = {
   root: {
@@ -48,19 +48,19 @@ const styles = {
   },
 };
 
-interface FilterMoviesCardProps {
-  onUserInput: (f: FilterOption, s: string) => void;
+interface FilterTvsCardProps {
+  onUserInput: (f: TvFilterOption, s: string) => void;
   titleFilter: string;
   genreFilter: string;
   ratingFilter: string;
   yearFilter: string;
 }
 
-const FilterMoviesCard: React.FC<FilterMoviesCardProps> = (props) => {
+const FilterTvsCard: React.FC<FilterTvsCardProps> = (props) => {
 
   const [rating, setRating] = useState("0");
   const [year, setYears] = useState("1900");
-  const { data, error, isLoading, isError } = useQuery<GenreData, Error>("genres", getGenres);
+  const { data, error, isLoading, isError } = useQuery<TvGenreData, Error>("genres", getGenre);
 
   if (isLoading) {
     return <Spinner />;
@@ -74,13 +74,13 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = (props) => {
   }
 
 
-  const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
+  const handleChange = (e: SelectChangeEvent, type: TvFilterOption, value: string) => {
     e.preventDefault()
     props.onUserInput(type, value)
   };
 
   const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleChange(e, "title", e.target.value)
+    handleChange(e, "name", e.target.value)
   }
 
   const handleGenreChange = (e: SelectChangeEvent) => {
@@ -111,7 +111,7 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = (props) => {
     <Card sx={styles.root} variant="outlined">
       <CardContent>
         <Typography variant="h5" component="h1" sx={styles.title}>
-          Filter the Movies
+          Filter the Tv Shows
         </Typography>
         <TextField
           sx={styles.textField}
@@ -177,4 +177,4 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = (props) => {
   );
 };
 
-export default FilterMoviesCard;
+export default FilterTvsCard;
