@@ -7,7 +7,7 @@ import { getTv } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import { TvT } from "../types/interfaces";
 
-const WriteTvReviewPage: React.FC = (props) => {
+const WriteTvReviewPage: React.FC = () => {
     const location = useLocation()
     const { tvId } = location.state;
     const { data: tv, error, isLoading, isError } = useQuery<TvT, Error>(

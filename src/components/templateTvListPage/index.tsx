@@ -7,7 +7,7 @@ import {  TvListPageTemplateProps} from "../../types/interfaces";
 
 const styles = {
   root: { 
-    backgroundColor: "#bfbfbf",
+    backgroundColor: "#ffffff",
   }
 };
 

@@ -1,7 +1,7 @@
 
 
 
-import React, {MouseEvent, useContext} from "react";
+import React, { useContext} from "react";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -14,9 +14,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
+
 import img from '../../images/film-poster-placeholder.png';
-import { BaseTv } from "../../types/interfaces"; 
+
 
 import { TvsContext } from "../../contexts/tvsContext";
 import { ListedTv } from "../../types/interfaces";
@@ -25,16 +25,13 @@ import { ListedTv } from "../../types/interfaces";
 import Avatar from "@mui/material/Avatar";
 
 
-interface TvCardProps extends BaseTv {
-  selectFavourite: (tvId: number) => void;
-} 
+
 
 const styles = {
-  card: { maxWidth: 345 },
+  card: { maxWidth: 445 },
   media: { height: 500 },
-  avatar: {
-    backgroundColor: "rgb(255, 0, 0)",
-  },
+  avatar: { backgroundColor: "rgb(255, 0, 0)" },   
+  title: {fontWeight: 'bold',fontSize:20 , height: 50 },
 };
 
 interface TvListProps {
@@ -45,7 +42,7 @@ interface TvListProps {
 
 const TvCard: React.FC<TvListProps> = (props) => {
   const tv = {...props.tv, favourite: false};
-  const { favourites, addToFavourites } = useContext(TvsContext);
+  const { favourites } = useContext(TvsContext);
   
   if (favourites.find((id) => id === tv.id)) 
     tv.favourite = true;
@@ -67,7 +64,7 @@ const TvCard: React.FC<TvListProps> = (props) => {
           ) : null
         }
         title={
-          <Typography variant="h5" component="p">
+          <Typography variant="h6" component="p" sx={styles.title}>
             {tv.name}{" "}
           </Typography>
         }

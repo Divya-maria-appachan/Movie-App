@@ -48,7 +48,7 @@ export const genreFiltering = {
 
 const FavouriteTvsPage: React.FC = () => {
   const { favourites: tvIds } = useContext(TvsContext);
-  const { filterValues, setFilterValues, filterFunction } = useFiltering([], [
+  const { filterValues, setFilterValues } = useFiltering([], [
     titleFiltering,
     genreFiltering,
     ratingFiltering,

@@ -3,9 +3,9 @@ import TvCard from "../components/tvCard";
 import SampleTv from "./sampleDataTv";
 import { MemoryRouter } from "react-router";
 import TvsContextProvider from "../contexts/tvsContext";
-import { action } from "@storybook/addon-actions";
+
 import AddToFavouritesIcon from "../components/cardIconsTv/addToFavourites";
-import React from 'react';
+
 
 const meta = {
   title: 'Tvs/TvCard',
@@ -34,7 +34,7 @@ const sampleNoPoster = { ...SampleTv, poster_path: undefined };
 export const Exceptional: Story = {
   args: {
     tv: sampleNoPoster,
-    action: (movie ) => <AddToFavouritesIcon {...movie} />,
+    action: (tv ) => <AddToFavouritesIcon {...tv} />,
   }
 };
 Exceptional.storyName = "Exception";

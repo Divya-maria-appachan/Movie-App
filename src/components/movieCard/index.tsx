@@ -1,5 +1,5 @@
-import React, {MouseEvent, useContext} from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import  { useContext  } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -11,47 +11,37 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
 import img from '../../images/film-poster-placeholder.png';
-import { BaseMovie } from "../../types/interfaces"; 
-
+import { Link } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { ListedMovie } from "../../types/interfaces";
 
-
-import Avatar from "@mui/material/Avatar";
-
-interface MovieCardProps extends BaseMovie {
-  selectFavourite: (movieId: number) => void;
-} 
-
 const styles = {
-  card: { maxWidth: 345 },
+  card: { maxWidth: 445 },
   media: { height: 500 },
-  avatar: {
-    backgroundColor: "rgb(255, 0, 0)",
-  },
+  avatar: { backgroundColor: "rgb(255, 0, 0)" },   
+  title: {fontWeight: 'bold',fontSize:20 , height: 55 },
 };
 
-interface MovieListProps {
-  movie: ListedMovie,
-  action: (m: ListedMovie) => React.ReactNode;
-  
-}
 
+
+interface MovieListProps {
+  movie:ListedMovie,
+  action: (m: ListedMovie) => React.ReactNode;
+}
 const MovieCard: React.FC<MovieListProps> = (props) => {
   const movie = {...props.movie, favourite: false};
-  const { favourites, addToFavourites } = useContext(MoviesContext);
+  const { favourites } = useContext(MoviesContext);
   
   if (favourites.find((id) => id === movie.id)) 
     movie.favourite = true;
  
-  
- 
+
 
   return (
-    <Card sx={styles.card}>
-       <CardHeader
+    <Card sx={styles.card} elevation={0} variant="outlined">
+      <CardHeader
         avatar={
           movie.favourite ? (
             <Avatar sx={styles.avatar}>
@@ -60,7 +50,7 @@ const MovieCard: React.FC<MovieListProps> = (props) => {
           ) : null
         }
         title={
-          <Typography variant="h5" component="p">
+          <Typography variant="h6" component="p" sx={styles.title}>
             {movie.title}{" "}
           </Typography>
         }
@@ -77,14 +67,14 @@ const MovieCard: React.FC<MovieListProps> = (props) => {
         <Grid container>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
-              <CalendarIcon fontSize="small" />
+              <CalendarIcon fontSize="small"  sx={{ mr : 0.5}}/>
               {movie.release_date}
             </Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+              {"  "} {movie.vote_average.toFixed(1)}{" "}
             </Typography>
           </Grid>
         </Grid>

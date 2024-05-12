@@ -49,7 +49,7 @@ export const genreFiltering = {
 
 const FavouriteMoviesPage: React.FC = () => {
   const { favourites: movieIds } = useContext(MoviesContext);
-  const { filterValues, setFilterValues, filterFunction } = useFiltering([], [
+  const { filterValues, setFilterValues } = useFiltering([], [
     titleFiltering,
     genreFiltering,
     ratingFiltering,

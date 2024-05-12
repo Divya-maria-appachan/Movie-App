@@ -22,6 +22,7 @@ interface MovieFilterUIProps {
   genreFilter: string;
   yearFilter: string;
   ratingFilter: string;
+  
 }
 
 // Title filter function

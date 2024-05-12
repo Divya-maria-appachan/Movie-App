@@ -127,20 +127,14 @@ const MovieForm: React.FC<MovieFormProps> = ({
           </Button>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", gap: "20px" }}>
-          <TextField
-            type="file"
-            accept="image/*"
-            onChange={(e) => handlePosterChange(e.target.files?.[0] || null)}
-            helperText="Select an image file for the movie poster"
-            variant="outlined"
-          />
-          {formData.poster && (
-            <img src={URL.createObjectURL(formData.poster)} alt="Uploaded Poster" style={{ maxWidth: "50%" }} />
-          )}
-          <Button variant="contained" color="primary" type="submit">
-            Submit
-          </Button>
-        </Box>
+  <input type="file" onChange={(e) => handlePosterChange(e.target.files?.[0] || null)} accept="image/*" />
+  {formData.poster && (
+    <img src={URL.createObjectURL(formData.poster)} alt="Uploaded Poster" style={{ maxWidth: "50%" }} />
+  )}
+  <Button variant="contained" color="primary" type="submit">
+    Submit
+  </Button>
+</Box>
       </Box>
       {/* Success Snackbar */}
       <Snackbar open={showSuccessMessage} autoHideDuration={6000} onClose={handleSnackbarClose}>

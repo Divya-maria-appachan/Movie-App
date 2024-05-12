@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import TvDetails from "../components/TvDetails";
 import { TvT} from "../types/interfaces";
 import PageTemplate from "../components/templateTvPage";
-import useTv from "../hooks/useTv";
+
 import { getTv } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'

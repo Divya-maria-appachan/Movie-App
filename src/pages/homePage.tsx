@@ -66,7 +66,7 @@ const HomePage: React.FC = () => {
         ? [filterValues[0], changedFilter, filterValues[2], filterValues[3]]
         : type === "rating"
         ? [filterValues[0], filterValues[1], changedFilter, filterValues[3]]
-        : [filterValues[0], filterValues[1], filterValues[2], changedFilter];
+        : [filterValues[0], filterValues[1], filterValues[2], changedFilter,];
     setFilterValues(updatedFilterSet);
   };
 

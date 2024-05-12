@@ -1,62 +1,106 @@
-
-
-import React, { useState, useEffect, FC } from "react";
+import React, { useState } from "react"; 
+import PageTemplate from '../components/templateMovieListPage';
+import { DiscoverMovies, ListedMovie } from "../types/interfaces";
 import { getUpcomingMovies } from "../api/tmdb-api";
-import PageTemplate from "../components/templateMovieListPage";
-import { ListedMovie } from "../types/interfaces";
-import AddToPlayListIcon from '../components/cardIcons/AddToPlayListIcon' // Import the new icon component
+import useFiltering from "../hooks/useFiltering";
+import MovieFilterUI, {
+  titleFilter,
+  genreFilter,
+  ratingFilter,
+  yearFilter,
+} from "../components/movieFilterUI";
+import { useQuery } from "react-query";
+import Spinner from "../components/spinner";
+import AddToPlayListIcon from '../components/cardIcons/AddToPlayListIcon';
 import Pagination from "../components/Pagination";
 
-const ITEMS_PER_PAGE = 12; // Number of movies to display per page
+const titleFiltering = {
+  name: "name",
+  value: "",
+  condition: titleFilter,
+};
 
-const UpcomingMoviesPage: FC = () => {
-  const [movies, setMovies] = useState<ListedMovie[]>([]);
-  const [currentPage, setCurrentPage] = useState(1); // Track the current page number
+const genreFiltering = {
+  name: "genre",
+  value: "0",
+  condition: genreFilter,
+};
 
-  useEffect(() => {
-    fetchMovies(currentPage); // Fetch movies for the initial page
-  }, [currentPage]); // Trigger fetchMovies whenever currentPage changes
+const ratingFiltering = {
+  name: "rating",
+  value: "0",
+  condition: ratingFilter,
+};
 
-  const fetchMovies = async (page: number) => {
-    try {
-      const upcomingMovies = await getUpcomingMovies(page); // Fetch upcoming movies for the specified page
-      setMovies(upcomingMovies);
-    } catch (error) {
-      console.error("Error fetching upcoming movies:", error);
+const yearFiltering = {
+  name: "year",
+  value: "1900",
+  condition: yearFilter,
+};
+const UpcomingMoviesPage: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
+    ["Upcoming", currentPage],
+    () => getUpcomingMovies(currentPage),
+    {
+      keepPreviousData: true, // Keep previous data while loading new data
     }
-  };
+  );
+  const { filterValues, setFilterValues, filterFunction } = useFiltering(
+    [],
+    [titleFiltering, genreFiltering, ratingFiltering, yearFiltering]
+  );
+ 
+    
+      if (isLoading) {
+        return <Spinner />;
+      }
+    
+      if (isError) {
+        return <h1>{error.message}</h1>;
+      }
 
-  // Calculate pagination values
-  const totalItems = movies.length;
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const displayMovies = movies.slice(startIndex, endIndex);
+      const changeFilterValues = (type: string, value: string) => {
+        const changedFilter = { name: type, value: value };
+        const updatedFilterSet =
+        type === "title"
+          ? [changedFilter, filterValues[1], filterValues[2], filterValues[3]]
+          : type === "genre"
+          ? [filterValues[0], changedFilter, filterValues[2], filterValues[3]]
+          : type === "rating"
+          ? [filterValues[0], filterValues[1], changedFilter, filterValues[3]]
+          : [filterValues[0], filterValues[1], filterValues[2], changedFilter];
+      setFilterValues(updatedFilterSet);
+    };
 
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+      const movies = data ? data : [];
+      const displayedMovies = filterFunction(movies);
 
-  return (
-    <>
+     
+
+
+    return (
+      <>
       <PageTemplate
-        title="Upcoming Movies"
-        movies={displayMovies}
-        action={(movie: ListedMovie) => {
-          return (
-           <>
-            <AddToPlayListIcon {...movie}/> {/* Render the new icon component */}
-           </>
-          ); 
-        }}
+      title='Upcoming Movies'
+      movies={displayedMovies}
+      action={(movie: ListedMovie) => {
+        return <AddToPlayListIcon {...movie} />
+      }}
+    />
+    <MovieFilterUI
+        onFilterValuesChange={changeFilterValues}
+        titleFilter={filterValues[0].value}
+        genreFilter={filterValues[1].value}
+        ratingFilter={filterValues[2].value}
+        yearFilter={filterValues[3].value}
       />
       <Pagination
         currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
+        totalPages={data?.total_pages || 1}
+        onPageChange={setCurrentPage}
       />
-    </>
+      </>
   );
 };
-
 export default UpcomingMoviesPage;

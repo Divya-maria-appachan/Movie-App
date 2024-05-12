@@ -210,7 +210,7 @@ export const getTrendingMovies = (page: number) => {
         });
     };
 
-    export const getTvActors = (id: string | number) => {
+    export const getActors = (id: string | number) => {
       return fetch(
         `https://api.themoviedb.org/3/tv/${id}/credits?api_key=${import.meta.env.VITE_TMDB_KEY}`
       )
