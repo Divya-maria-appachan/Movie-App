@@ -1,30 +1,92 @@
-# React + TypeScript + Vite
+# Assignment 2 - React App 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+__Name:__ Divya Maria Appachan
 
-Currently, two official plugins are available:
+__Video demonstration:__ ..... [URL of  YouTube video demonstration](https://youtu.be/FcIZV8iAtk0) ....
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This repository contains an implementation of the Movie Fans Web Application using the ReactJS library. 
 
-## Expanding the ESLint configuration
+### Features
+[ A bullet-point list of the __new features__ you added to the Movies Fan app (and any modifications to existing features) .]
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
++ Add pagination
++ Add rate sorting criteria for movie
++ Add year sorting criteria for movie
++ Add rate sorting criteria for TV shows
++ Add year sorting criteria for TV show
++ Select Tv shows by titile
++ Add gener filter for TV shows
++ Multi-criteria Search with those filters
++ Favourite TV series.
++ My fantasy movie-The user can create their fantasy movie record.Allow the addition of a cast, where each member has a role name and description. Adding/Uploading a movie poster.
++ Add Review form for Favorite Tv shows
++ Add add favorite and remove favorite button
++ Add tv show detailed view section
++ Data Model- An additional data entity typeTV series and Server state Caching.
++ Storybook support.
 
-- Configure the top-level `parserOptions` property like this:
+### Setup requirements.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
++ Ensure you have Node.js and npm installed on your machine.
++ Navigate to the root directory of the cloned repository in your terminal.
++ Run npm install to install the necessary dependencies.
++ Create a .env file in the root directory and add your TMDB API key as REACT_APP_TMDB_API_KEY=your_api_key_here.
++ Run npm start to start the development server.
++ Open your web browser and navigate to http://localhost:3000 to view the app.
++ Make sure to replace your_api_key_here with your actual TMDB API key.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### API endpoints
+
+[ List the __additional__ TMDB endpoints used, giving the description and pathname for each one.] 
+
+e.g.
++ Discover list of movies - discover/movie
++ Movie details - movie/:id
++ /reviews/:id = Movie Review Page
++ Movie genres = /genre/movie/list
+
++ Upcoming Movie =/movie/upcoming
++ Trending Movies= /trending/movie/week
+
++ Discover list of Shows - discover/tv
++ Tv Shows details - tv/:id
++ /reviews/:id = Tv shows Review Page
++ Tv shows genres = /genre/tv/list
+
++ 
++ Trending Tv shows= /trending/tv/week
+
+
+        
+        
+
+### Routing
+
+[ List the __new routes__ supported by your app and state the associated page.]
+
++ TrendingMovies= /movies/trending
++ reviews/form = Add Movie Review Page
++ Tv shows page=      /tvs
++ Tv Detail Page = /tvs/:id
++ Trending Tv Shows = /tvs/trending
++ Favourite Tv Show Page = /tvs/favourites
++ Tv Review Page=/tvs/reviews/:id
++ Add Tv Review Page = /tvs/reviews/form
++ CreateMoviePage=      /fantasy
++  genres tv show = /genre/tvs/list
+
+[If relevant, state what aspects of your app are protected (i.e. require authentication) and what is public.]
+
+### Assignment 1 integration
+
+[Describe the level of  integration with the API developed in Assignment 1.]
+
++ front end deployment
+
+
+### Independent learning (If relevant)
+
+Provide the calender for my fantasy movie
+uploadind in poster of the movie 
+Allow the addition of a cast, where each member has a role name and description
+sliding filter is implemneted
