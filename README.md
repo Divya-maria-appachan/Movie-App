@@ -76,7 +76,7 @@ This repository contains an implementation of the Movie Fans Web Application usi
 
 
 + front end deployment
-
++ Frontend CDN deployment to AWS (CloudFront)
 
 ### Independent learning (If relevant)
 
