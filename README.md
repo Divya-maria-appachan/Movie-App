@@ -37,23 +37,17 @@ This repository contains an implementation of the Movie Fans Web Application usi
 
 ### API endpoints
 
-[ List the __additional__ TMDB endpoints used, giving the description and pathname for each one.] 
 
-e.g.
 + Discover list of movies - discover/movie
 + Movie details - movie/:id
 + /reviews/:id = Movie Review Page
 + Movie genres = /genre/movie/list
-
 + Upcoming Movie =/movie/upcoming
 + Trending Movies= /trending/movie/week
-
 + Discover list of Shows - discover/tv
 + Tv Shows details - tv/:id
-+ /reviews/:id = Tv shows Review Page
++ Tv shows Review Page = /reviews/:id 
 + Tv shows genres = /genre/tv/list
-
-+ 
 + Trending Tv shows= /trending/tv/week
 
 
@@ -62,7 +56,7 @@ e.g.
 
 ### Routing
 
-[ List the __new routes__ supported by your app and state the associated page.]
+
 
 + TrendingMovies= /movies/trending
 + reviews/form = Add Movie Review Page
@@ -74,19 +68,19 @@ e.g.
 + Add Tv Review Page = /tvs/reviews/form
 + CreateMoviePage=      /fantasy
 +  genres tv show = /genre/tvs/list
++ Tv show review form =  /tvs/reviews/form"
 
 [If relevant, state what aspects of your app are protected (i.e. require authentication) and what is public.]
 
 ### Assignment 1 integration
 
-[Describe the level of  integration with the API developed in Assignment 1.]
 
 + front end deployment
 
 
 ### Independent learning (If relevant)
 
-Provide the calender for my fantasy movie
-uploadind in poster of the movie 
-Allow the addition of a cast, where each member has a role name and description
-sliding filter is implemneted
++ Provide the calender for my fantasy movie
++ uploadind in poster of the movie 
++ Allow the addition of a cast, where each member has a role name and description
++ sliding filter is implemented
